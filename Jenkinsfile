@@ -8,15 +8,10 @@ pipeline {
         }
         stage('Build & SonarQube Scanner') {
             steps {
-                withSonarQubeEnv('SonarQube_server') {
+                withSonarQubeEnv('SonarQube Scanner') {
                     sh 'sonar-scanner'
                 }
             }
-        }
-    }
-    post {
-        always {
-            // Cleanup or post-processing steps
         }
     }
 }
