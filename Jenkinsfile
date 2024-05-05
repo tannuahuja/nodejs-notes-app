@@ -1,14 +1,22 @@
 pipeline {
-        agent none
-        stages {
-         
-          stage("build & SonarQube Scanner") {
-            agent any
+    agent any
+    stages {
+        stage('Install dependencies') {
             steps {
-              withSonarQubeEnv('SonarQube_server') {
-                sh 'mvn clean package sonar:sonar'
-              }
+                sh 'npm install'
             }
-          }
         }
-      }
+        stage('Build & SonarQube Scanner') {
+            steps {
+                withSonarQubeEnv('SonarQube_server') {
+                    sh 'sonar-scanner'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            // Cleanup or post-processing steps
+        }
+    }
+}
